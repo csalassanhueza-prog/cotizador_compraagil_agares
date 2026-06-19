@@ -13,6 +13,7 @@ import httpx
 import anthropic
 from fastapi import FastAPI, HTTPException, Query, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Response
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 
@@ -122,11 +123,10 @@ app = FastAPI(title="Cotizador de Insumos de Laboratorio", version="3.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://csalassanhueza-prog.github.io", "http://localhost", "*"],
     allow_credentials=False,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"],
 )
 # ─────────────────────────────────────────────
 # Modelos
