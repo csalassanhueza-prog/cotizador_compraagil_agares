@@ -589,7 +589,13 @@ def cache_stats():
 # ─────────────────────────────────────────────
 # Endpoints — protegidos con X-API-Key
 # ─────────────────────────────────────────────
+@app.options("/api/search")
+async def options_search():
+    return JSONResponse(content={}, status_code=200)
 
+@app.options("/api/compra-agil/buscar")
+async def options_compra_agil():
+    return JSONResponse(content={}, status_code=200)
 @app.post("/api/search", dependencies=[Depends(verify_api_key)])
 async def search(req: SearchRequest):
     # Sprint 2 — caché
