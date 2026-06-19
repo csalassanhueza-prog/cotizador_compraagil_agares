@@ -120,7 +120,26 @@ async def verify_api_key(api_key: Optional[str] = Depends(_api_key_header)) -> N
 # ─────────────────────────────────────────────
 
 app = FastAPI(title="Cotizador de Insumos de Laboratorio", version="3.0.0")
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request as StarletteRequest
 
+class CORSHandlerMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: StarletteRequest, call_next):
+        if request.method == "OPTIONS":
+            from starlette.responses import Response
+            response = Response()
+            response.headers["Access-Control-Allow-Origin"] = "*"
+            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            response.headers["Access-Control-Allow-Headers"] = "*"
+            return response
+        response = await call_next(request)
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "*"
+        return response
+
+app.add_middleware(CORSHandlerMiddleware)
+Haz commit → espera redeploy → prueba de nuevo.Claude Fable 5 no está disponible en este momento.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://csalassanhueza-prog.github.io", "http://localhost", "*"],
