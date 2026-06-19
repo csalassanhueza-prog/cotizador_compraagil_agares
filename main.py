@@ -123,10 +123,11 @@ app = FastAPI(title="Cotizador de Insumos de Laboratorio", version="3.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*", "X-API-Key"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+    expose_headers=["*"],
 )
-
 # ─────────────────────────────────────────────
 # Modelos
 # ─────────────────────────────────────────────
