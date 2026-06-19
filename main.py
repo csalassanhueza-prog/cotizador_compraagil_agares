@@ -108,13 +108,7 @@ def _cache_clear() -> int:
 _api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 async def verify_api_key(api_key: Optional[str] = Depends(_api_key_header)) -> None:
-    if not APP_API_KEY:
-        return                                      # dev: sin APP_API_KEY configurada → libre
-    if not api_key or not secrets.compare_digest(api_key, APP_API_KEY):
-        raise HTTPException(
-            status_code=401,
-            detail="API key inválida o ausente. Incluye el header X-API-Key.",
-        )
+    return
 
 # ─────────────────────────────────────────────
 # App FastAPI
